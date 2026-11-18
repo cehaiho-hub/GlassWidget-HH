@@ -18,14 +18,28 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Build with Gradle
+      - name: Build APK Direct
         run: |
-          export ANDROID_SDK_ROOT=$ANDROID_HOME
-          echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
-          chmod +x gradlew || gradle wrapper --gradle-version 8.5
+          # Tự động tải Android Command Line Tools phiên bản ổn định trực tiếp từ Google
+          mkdir -p $HOME/cmdline-tools
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O tools.zip
+          unzip -q tools.zip -d $HOME/cmdline-tools
+          mkdir -p $HOME/android-sdk/cmdline-tools/latest
+          mv $HOME/cmdline-tools/cmdline-tools/* $HOME/android-sdk/cmdline-tools/latest/
+          rm tools.zip
+          
+          export ANDROID_HOME=$HOME/android-sdk
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
+          
+          # Cấp phép và cài đặt các gói cần thiết một cách sạch sẽ
+          yes | sdkmanager --licenses >/dev/null 2>&1 || true
+          sdkmanager "platforms;android-34" "build-tools;34.0.0" >/dev/null
+          
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+          
+          # Biên dịch trực tiếp qua Gradle
+          gradle wrapper --gradle-version 8.5
+          chmod +x gradlew
           ./gradlew assembleDebug
 
       - name: Upload APK
