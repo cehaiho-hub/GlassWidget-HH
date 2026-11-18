@@ -1,0 +1,8 @@
+CÁCH XUẤT RA FILE .APK TRỰC TIẾP TRÊN TRÌNH DUYỆT (KHÔNG CẦN CÀI ANDROID STUDIO):
+
+1. Truy cập https://github.com -> Đăng nhập (hoặc tạo tài khoản miễn phí).
+2. Bấm dấu "+" góc trên bên phải -> Chọn "New repository" -> Đặt tên bất kỳ (ví dụ: GlassWidget) -> Bấm "Create repository".
+3. Bấm dòng "uploading an existing file" -> Giải nén file ZIP này và kéo thả TOÀN BỘ thư mục bên trong (bao gồm cả thư mục ẩn .github) lên đó -> Bấm "Commit changes".
+4. Chuyển sang tab "Actions" ở thanh menu trên cùng của kho lưu trữ vừa tạo.
+5. Đợi khoảng 1-2 phút cho hệ thống tự động biên dịch (hiện dấu tích xanh).
+6. Bấm vào dòng "Build Android APK" vừa chạy xong -> Kéo xuống dưới cùng mục "Artifacts" -> Bấm tải "GlassWidget-App-APK" về là có ngay file app-debug.apk cài trực tiếp lên điện thoại!
